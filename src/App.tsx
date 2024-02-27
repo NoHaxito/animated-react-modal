@@ -1,45 +1,32 @@
-import React, { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import "./App.css";
+import React, { useState } from "react";
+import Modal from "./Modal";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [animation, setAnimation] = useState<"open" | "close" | null>(null);
+  const [display, setDisplay] = useState(false);
+
+  const hide = async (ms: number = 1000) => {
+    setAnimation("close");
+    await new Promise((r) => setTimeout(r, ms));
+    setDisplay(false);
+  };
+  const show = async (ms: number = 1000) => {
+    setAnimation("open");
+    await new Promise((r) => setTimeout(r, ms));
+    setDisplay(true);
+  };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+    <div className="dark:text-white dark:bg-neutral-950 flex flex-col items-center justify-center min-h-screen">
+      <h1 className="text-xl font-bold mb-3">Animated React Modal</h1>
+      <button
+        className="rounded-lg px-3 py-2 dark:bg-neutral-900 dark:hover:bg-neutral-800 bg-neutral-200 hover:bg-neutral-300"
+        onClick={() => show(200)}
+      >
+        Open modal
+      </button>
+      {display ? <Modal animation={animation} hide={hide} /> : null}
     </div>
-  )
+  );
 }
-
-export default App
