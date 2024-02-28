@@ -1,2 +1,1 @@
 # Animated React Modal
-

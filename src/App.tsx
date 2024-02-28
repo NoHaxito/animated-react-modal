@@ -1,37 +1,19 @@
-import "./App.css";
 import React, { useState } from "react";
-import Modal from "./Modal";
+import { Modal } from "./components/modal";
+import { ModeToggle } from "./components/mode-toggle";
 
 export default function App() {
-  const [animation, setAnimation] = useState<"open" | "close" | null>(null);
-  const [display, setDisplay] = useState(false);
-
-  const hide = async (ms: number = 1000) => {
-    setAnimation("close");
-    await new Promise((r) => setTimeout(r, ms));
-    setDisplay(false);
-  };
-  const show = async (ms: number = 1000) => {
-    setAnimation("open");
-    await new Promise((r) => setTimeout(r, ms));
-    setDisplay(true);
-  };
-
   return (
-    <div className="dark:text-white dark:bg-neutral-950 flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-xl font-bold mb-3">Animated React Modal</h1>
-      <button
-        className="rounded-lg px-3 py-2 dark:bg-neutral-900 dark:hover:bg-neutral-800 bg-neutral-200 hover:bg-neutral-300"
-        onClick={() => show(200)}
-      >
-        Open modal
-      </button>
-
-      <footer className="fixed bottom-2 right-5">
+    <div className="flex min-h-screen flex-col items-center justify-center dark:bg-neutral-950 dark:text-white">
+      <div className="w-full max-w-[15rem] text-center">
+        <h1 className="mb-3 text-xl font-bold">Animated React Modal</h1>
+        <Modal />
+      </div>
+      <footer className="fixed bottom-2 right-5 flex flex-row-reverse items-center gap-1">
         <a
           href="https://github.com/nohaxito/animated-react-modal"
           target="_blank"
-          className="size-8 p-1 dark:border-neutral-800 rounded-full border dark:hover:bg-neutral-900 flex items-center justify-center"
+          className="flex size-8 items-center justify-center rounded-full border p-1 dark:border-neutral-800 dark:hover:bg-neutral-900"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -50,9 +32,8 @@ export default function App() {
           </svg>
           <span className="sr-only">Icon description</span>
         </a>
+        <ModeToggle />
       </footer>
-
-      {display ? <Modal animation={animation} hide={hide} /> : null}
     </div>
   );
 }
